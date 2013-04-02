@@ -6,24 +6,22 @@ import org.json.JSONObject;
 
 import android.content.Context;
 
-public class JSONKeyValueStore {
-
-	private KeyValueStore kv;
+public class JSONKeyValueStore extends KeyValueStore {
 
 	public JSONKeyValueStore(Context context, String name) {
-		kv = new KeyValueStore(context, name);
+		super(context, name);
 	}
 	
 	public void put(String key, JSONObject value){
-		kv.put(key, value.toString());
+		put(key, value.toString());
 	}
 	
-	public void del(String key){
-		kv.del(key);
+	public void put(String key, JSONArray value){
+		put(key, value.toString());
 	}
 	
 	public JSONObject getJSONObject(String key){
-		String str = kv.get(key);
+		String str = get(key);
 		JSONObject result = null;
         if(str != null) {
         	try {
@@ -36,7 +34,7 @@ public class JSONKeyValueStore {
 	}
 	
 	public JSONArray getJSONArray(String key){
-		String str = kv.get(key);
+		String str = get(key);
 		JSONArray result = null;
         if(str != null) {
         	try {
@@ -47,12 +45,5 @@ public class JSONKeyValueStore {
         }
         return result;
 	}
-	
-	public boolean has(String key) {
-		return kv.has(key);
-	}
-	
-	public void close(){
-		kv.close();
-	}
+
 }
